@@ -1,0 +1,15 @@
+# Free Supabase projects pause after 7 days without traffic. One tiny read every 3 days keeps it awake (free on GitHub).
+name: Keep Supabase awake
+on:
+  schedule:
+    - cron: '0 6 */3 * *'
+  workflow_dispatch:
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Read one row through the public API
+        # The publishable key is public by design; row-level security returns nothing to it.
+        run: |
+          curl -sf "https://dgnqofqwpzskbywhvubb.supabase.co/rest/v1/books?select=id&limit=1" \
+            -H "apikey: sb_publishable_r-EBZC19nkXApUJtZlmL4w_wKIauE3V" -o /dev/null

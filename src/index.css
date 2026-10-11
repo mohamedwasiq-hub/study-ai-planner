@@ -1,0 +1,56 @@
+@import "tailwindcss";
+@import "@fontsource-variable/geist";
+@import "@fontsource/noto-sans-devanagari/400.css";
+@import "@fontsource/noto-sans-devanagari/600.css";
+
+@theme {
+  /* Devanagari falls through to Noto for Hindi-medium notes */
+  --font-sans: "Geist Variable", "Noto Sans Devanagari", ui-sans-serif, system-ui, sans-serif;
+  --color-accent: #2d4fd8;
+  --color-accent-strong: #2340b8;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root { --color-accent: #7d97ff; --color-accent-strong: #9aafff; }
+}
+
+body {
+  @apply bg-zinc-50 text-zinc-900 antialiased dark:bg-zinc-950 dark:text-zinc-100;
+}
+
+/* Keyboard users always see where they are */
+:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 2px; border-radius: 6px; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+}
+
+/* Rendered notes: readable study typography */
+.notes { @apply text-[16px] leading-relaxed text-zinc-800 dark:text-zinc-200; }
+.notes h1 { @apply mt-8 text-2xl font-semibold tracking-tight text-zinc-900 dark:text-zinc-50; }
+.notes h2 { @apply mt-8 text-xl font-semibold text-zinc-900 dark:text-zinc-50; }
+.notes h3 { @apply mt-6 text-lg font-semibold text-zinc-900 dark:text-zinc-50; }
+.notes h4 { @apply mt-4 font-semibold; }
+.notes p { @apply mt-3; }
+.notes ul { @apply mt-3 list-disc pl-6; }
+.notes ol { @apply mt-3 list-decimal pl-6; }
+.notes li { @apply mt-1; }
+.notes strong { @apply font-semibold text-zinc-900 dark:text-zinc-50; }
+.notes blockquote { @apply mt-4 border-l-4 border-accent pl-4 text-zinc-600 dark:text-zinc-400; }
+.notes table { @apply mt-4 w-full border-collapse text-sm; }
+.notes th { @apply border border-zinc-300 bg-zinc-100 px-3 py-2 text-left font-semibold dark:border-zinc-700 dark:bg-zinc-900; }
+.notes td { @apply border border-zinc-300 px-3 py-2 align-top dark:border-zinc-700; }
+.notes code { @apply rounded bg-zinc-100 px-1 text-[0.9em] dark:bg-zinc-800; }
+.notes pre { @apply mt-4 overflow-x-auto rounded-[10px] bg-zinc-100 p-3 dark:bg-zinc-900; }
+.notes hr { @apply my-8 border-zinc-200 dark:border-zinc-800; }
+.notes .katex-display { @apply my-4 overflow-x-auto overflow-y-hidden; }
+
+/* Download PDF = the browser's print to PDF: A4, always light, no app chrome */
+@page { size: A4; margin: 16mm 14mm; }
+@media print {
+  body { background: white !important; color: #18181b !important; }
+  main, main * { color: #18181b !important; background: transparent !important; border-color: #d4d4d8 !important; }
+  .notes th { background: #f4f4f5 !important; }
+  .notes h1, .notes h2, .notes h3 { break-after: avoid; }
+  .notes table, .notes pre, .notes .katex-display { break-inside: avoid; }
+}
